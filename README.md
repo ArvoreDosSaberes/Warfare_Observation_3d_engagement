@@ -13,14 +13,11 @@ Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos concei
 [![Language-C](https://img.shields.io/badge/language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![CMake](https://img.shields.io/badge/build-CMake-informational.svg)](https://cmake.org/)
 [![Raylib](https://img.shields.io/badge/graphics-raylib-2ea44f.svg)](https://www.raylib.com/)
-[![Issues](https://img.shields.io/github/issues/ArvoreDosSaberes/Warfare_Observation_3d_engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_engagement/issues)
-[![Stars](https://img.shields.io/github/stars/ArvoreDosSaberes/Warfare_Observation_3d_engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_engagement/stargazers)
-[![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/Warfare_Observation_3d_engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_engagement/network/members)
+[![Issues](https://img.shields.io/github/issues/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/issues)
+[![Stars](https://img.shields.io/github/stars/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/stargazers)
+[![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/network/members)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 
-Modelos de badges inspirados em:
-- https://github.com/ArvoreDosSaberes/Jogo_da_Vida
-- https://github.com/ArvoreDosSaberes/Maze_Solver_RP2040
 
 ## Conceitos Implementados
 
