@@ -9,7 +9,10 @@ Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos concei
 
 ## Badges
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/ArvoreDosSaberes/Maze_Solver_RP2040/actions/workflows/ci.yml/badge.svg)](https://github.com/ArvoreDosSaberes/Maze_Solver_RP2040/actions/workflows/ci.yml)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=ArvoreDosSaberes.Maze_Solver_RP2040)
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-blue.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+![Language: Portuguese](https://img.shields.io/badge/Language-Portuguese-brightgreen.svg)
 [![Language-C](https://img.shields.io/badge/language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![CMake](https://img.shields.io/badge/build-CMake-informational.svg)](https://cmake.org/)
 [![Raylib](https://img.shields.io/badge/graphics-raylib-2ea44f.svg)](https://www.raylib.com/)
@@ -17,6 +20,9 @@ Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos concei
 [![Stars](https://img.shields.io/github/stars/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/stargazers)
 [![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/network/members)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+[![Watchers](https://img.shields.io/github/watchers/ArvoreDosSaberes/Maze_Solver_RP2040)](https://github.com/ArvoreDosSaberes/Maze_Solver_RP2040/watchers)
+[![Last Commit](https://img.shields.io/github/last-commit/ArvoreDosSaberes/Maze_Solver_RP2040)](https://github.com/ArvoreDosSaberes/Maze_Solver_RP2040/commits)
+[![Contributors](https://img.shields.io/github/contributors/ArvoreDosSaberes/Maze_Solver_RP2040)](https://github.com/ArvoreDosSaberes/Maze_Solver_RP2040/graphs/contributors)
 
 
 ## Conceitos Implementados
