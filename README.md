@@ -60,4 +60,4 @@ Executar:
 
 ## Licença
 
-MIT. Veja o arquivo LICENSE (a ser adicionado no repositório destino).
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International:x. Veja o arquivo LICENSE (a ser adicionado no repositório destino).
