@@ -139,6 +139,41 @@ static void DrawAircraft(Vector3 A, float yaw, float pitch, float roll, Color co
     DrawCylinderEx(A, tailTop, 0.03f, 0.03f, 8, Fade(col, 0.8f));
 }
 
+// Project 3D point to 2D screen and draw text at that position
+static void DrawTextAt3D(Camera3D cam, Vector3 p, const char *text, int fontSize, Color col, int screenW, int screenH)
+{
+    Vector2 s = GetWorldToScreenEx(p, cam, screenW, screenH);
+    DrawText(text, (int)s.x + 6, (int)s.y - fontSize - 2, fontSize, col);
+}
+
+// Draw a circular arc in 3D between unit vectors u->v around their plane, centered at originC, with given radius
+static void DrawArc3D(Vector3 originC, Vector3 u, Vector3 v, float angleJ, float radius, Color col)
+{
+    if (angleJ <= 1e-5f) return;
+    // plane normal
+    Vector3 n = Vector3CrossProduct(u, v);
+    float nn = Vector3Length(n);
+    if (nn < 1e-6f) return; // nearly colinear
+    n = Vector3Scale(n, 1.0f/nn);
+    // w = normalized (n x u) lies on the plane and orthogonal to u
+    Vector3 w = Vector3CrossProduct(n, u);
+    float wn = Vector3Length(w);
+    if (wn < 1e-6f) return;
+    w = Vector3Scale(w, 1.0f/wn);
+
+    const int steps = 32;
+    float dt = angleJ/steps;
+    Vector3 prev = Vector3Add(originC, Vector3Scale(Vector3Add(Vector3Scale(u, cosf(0)), Vector3Scale(w, sinf(0))), radius));
+    for (int i = 1; i <= steps; ++i)
+    {
+        float t = dt * i;
+        Vector3 curDir = Vector3Add(Vector3Scale(u, cosf(t)), Vector3Scale(w, sinf(t)));
+        Vector3 cur = Vector3Add(originC, Vector3Scale(curDir, radius));
+        DrawLine3D(prev, cur, col);
+        prev = cur;
+    }
+}
+
 int main(void)
 {
     const int screenWidth = 1280;
@@ -167,6 +202,8 @@ int main(void)
     const float moveSpeed = 5.0f;
     const float rotSpeed = rad(45.0f); // deg/s
 
+    bool showAnn = true; // toggle annotations
+
     while (!WindowShouldClose())
     {
         float dt = GetFrameTime();
@@ -194,6 +231,7 @@ int main(void)
         if (IsKeyDown(KEY_DOWN))  pitch -= rotSpeed*dt;
         if (IsKeyDown(KEY_Z))     roll -= rotSpeed*dt;
         if (IsKeyDown(KEY_X))     roll += rotSpeed*dt;
+        if (IsKeyPressed(KEY_H))  showAnn = !showAnn; // toggle annotations
 
         // Optional: orbit camera with mouse left button
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
@@ -231,6 +269,22 @@ int main(void)
         DrawAircraft(A, yaw, pitch, roll, DARKBLUE);
         DrawSphere(T, 0.4f, MAROON);
         DrawLine3D(A, T, Fade(MAROON, 0.6f));
+
+        // Annotations in 3D: forward vector and arc j
+        Vector3 noseLineEnd = Vector3Add(A, Vector3Scale(fwd, 4.0f));
+        DrawLine3D(A, noseLineEnd, BLUE);
+        if (showAnn)
+        {
+            // unit vectors from A
+            Vector3 u = fwd; // already unit
+            Vector3 dAT = Vector3Subtract(T, A);
+            float dn = Vector3Length(dAT);
+            if (dn > 1e-6f)
+            {
+                Vector3 v = Vector3Scale(dAT, 1.0f/dn);
+                DrawArc3D(A, u, v, j, 1.5f, PURPLE);
+            }
+        }
 
         EndMode3D();
 
@@ -272,8 +326,44 @@ int main(void)
                  deg(j), deg(J), deg(E), deg(F), deg(G));
         DrawText(buf, 16, 40, 18, BLACK);
 
-        DrawText("Controls: Aircraft I/K J/L U/O, Target W/S A/D Q/E, Yaw/Pitch Arrows, Roll Z/X, Orbit Cam RMB",
+        DrawText("Controls: Aircraft I/K J/L U/O, Target W/S A/D Q/E, Yaw/Pitch Arrows, Roll Z/X, Orbit Cam RMB, Toggle labels H",
                  16, screenHeight-28, 16, DARKGRAY);
+
+        // 2D annotations projected from 3D if enabled
+        if (showAnn)
+        {
+            // Labels for A and T
+            DrawTextAt3D(cam, A, "A (aeronave)", 16, DARKBLUE, screenWidth, screenHeight);
+            DrawTextAt3D(cam, T, "T (alvo)", 16, MAROON, screenWidth, screenHeight);
+
+            // Label for forward vector R at its end
+            DrawTextAt3D(cam, Vector3Add(A, Vector3Scale(fwd, 4.2f)), "R (eixo de rolagem)", 16, BLUE, screenWidth, screenHeight);
+
+            // Midpoint along arc j for label
+            Vector3 dAT = Vector3Subtract(T, A);
+            float dn = Vector3Length(dAT);
+            if (dn > 1e-6f && j > 1e-3f)
+            {
+                Vector3 u = fwd;
+                Vector3 v = Vector3Scale(dAT, 1.0f/dn);
+                Vector3 n = Vector3Normalize(Vector3CrossProduct(u, v));
+                Vector3 w = Vector3Normalize(Vector3CrossProduct(n, u));
+                float tmid = j*0.5f;
+                Vector3 midDir = Vector3Add(Vector3Scale(u, cosf(tmid)), Vector3Scale(w, sinf(tmid)));
+                Vector3 midPos = Vector3Add(A, Vector3Scale(midDir, 1.6f));
+                DrawTextAt3D(cam, midPos, "j", 18, PURPLE, screenWidth, screenHeight);
+
+                // Show Az/El near the A->T line midpoint
+                Vector3 midAT = Vector3Add(A, Vector3Scale(dAT, 0.5f));
+                char lab[128];
+                snprintf(lab, sizeof(lab), "AzT=%.0f° ElT=%.0f°", deg(AzT), deg(ElT));
+                DrawTextAt3D(cam, midAT, lab, 16, MAROON, screenWidth, screenHeight);
+
+                // Show AzR/ElR near forward vector end
+                snprintf(lab, sizeof(lab), "AzR=%.0f° ElR=%.0f°", deg(AzR), deg(ElR));
+                DrawTextAt3D(cam, Vector3Add(A, Vector3Scale(fwd, 4.6f)), lab, 16, BLUE, screenWidth, screenHeight);
+            }
+        }
 
         EndDrawing();
     }

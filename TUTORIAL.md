@@ -98,6 +98,9 @@ Se a janela abrir, está tudo certo! Você deve ver a cena 3D, a aeronave, o alv
 
 - Câmera:
   - Botão direito do mouse + arrastar: orbita a câmera ao redor da aeronave
+  
+- Anotações/Marcadores (rótulos e arcos):
+  - H: ligar/desligar as anotações gráficas
 
 Dica: se “perder” a cena, orbite um pouco com o mouse e recoloque aeronave/alvo com as teclas.
 
@@ -118,6 +121,27 @@ Tradução simples:
 - `j` pequeno → alvo perto do centro (alinhado ao nariz).
 - `j` grande → alvo mais afastado do centro.
 - Girar a aeronave em roll (Z/X) faz o símbolo girar em torno do centro, mantendo o raio.
+
+---
+
+## 6.1) Visualização com rótulos (tecla H)
+
+Ao pressionar H, o app mostra/oculta anotações gráficas úteis:
+
+- Rótulos 3D:
+  - "A (aeronave)": marca a posição da aeronave `A`.
+  - "T (alvo)": marca a posição do alvo `T`.
+  - "R (eixo de rolagem)": mostrado na ponta do vetor frente da aeronave (nariz), indica a direção do eixo de rolagem.
+
+- Arco 3D do ângulo `j`:
+  - Um arco roxo entre o vetor `R` (frente da aeronave) e a direção até o alvo `A→T`.
+  - O rótulo "j" aparece aproximadamente no meio do arco.
+
+- Rótulos de azimute/elevação:
+  - Perto da metade do segmento `A→T`: `AzT` e `ElT` (alvo visto pela aeronave).
+  - Perto da ponta do vetor `R`: `AzR` e `ElR` (orientação do nariz no referencial global).
+
+Use H para alternar entre uma visão limpa e uma visão didática com todos os elementos nomeados.
 
 ---
 
