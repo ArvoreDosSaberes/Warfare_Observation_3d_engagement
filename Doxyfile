@@ -1,0 +1,33 @@
+# Doxyfile minimal para este projeto
+PROJECT_NAME           = "Warfare Observation 3D Engagement"
+OUTPUT_DIRECTORY       = docs
+
+# Incluir código-fonte e arquivos Markdown
+INPUT                  = src README.md TUTORIAL.md
+FILE_PATTERNS          = *.c *.h *.md
+RECURSIVE              = YES
+
+# Suporte a Markdown e usar README como página principal
+MARKDOWN_SUPPORT       = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_GLOBALS        = YES
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_TREEVIEW      = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+OPTIMIZE_OUTPUT_FOR_C  = YES
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = NO
+GENERATE_LATEX         = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+JAVADOC_AUTOBRIEF      = YES
+ALIASES                = "rst=\verbatim" "endrst=\endverbatim"

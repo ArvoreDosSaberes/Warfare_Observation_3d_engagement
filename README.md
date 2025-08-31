@@ -15,6 +15,8 @@
 
 # Warfare Observation 3D Engagement
 
+![Demonstração do aplicativo](img/screenshot000.png)
+
 Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos conceitos de Azimute/Elevação, triângulos esféricos e posicionamento do alvo relativo ao eixo de rolagem da aeronave.
 
  - Renderização 3D com Raylib

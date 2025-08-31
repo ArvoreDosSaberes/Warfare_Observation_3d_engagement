@@ -1,3 +1,11 @@
+/**
+ * @file main.c
+ * @brief Demo Raylib 3D: aeronave, alvo e HUD com ângulos esféricos.
+ *
+ * Visualiza uma aeronave e um alvo em 3D, calcula azimute/elevação do alvo e do
+ * vetor de frente da aeronave e deriva os ângulos esféricos j, J, E, F e G para
+ * desenhar um HUD. Pressione H para alternar rótulos/anotações didáticas.
+ */
 #include "raylib.h"
 #include "raymath.h"
 #include <math.h>
@@ -7,19 +15,60 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+/**
+ * @defgroup config Constantes de configuração
+ * @brief Parâmetros globais de HUD, janela e interação.
+ * @{ 
+ */
+/** Largura padrão da janela (px). */
+static const int DEFAULT_SCREEN_WIDTH = 1280;
+/** Altura padrão da janela (px). */
+static const int DEFAULT_SCREEN_HEIGHT = 720;
+/** Velocidade de movimento (unid/s) para aeronave e alvo. */
+static const float MOVE_SPEED = 5.0f;
+/** Velocidade de rotação (graus/s). */
+static const float ROT_SPEED_DEG = 45.0f;
+/** Velocidade de rotação (rad/s). */
+static const float ROT_SPEED = (float)(ROT_SPEED_DEG * M_PI / 180.0);
+/** Fator de pixels por radiano para o HUD (raio do marcador). */
+static const float HUD_PIXELS_PER_RAD = 220.0f;
+/** @} */
+
+/**
+ * @brief Converte graus para radianos.
+ * @param deg Valor em graus.
+ * @return Valor em radianos.
+ */
 static inline float rad(float deg) { return deg*(float)M_PI/180.0f; }
+
+/**
+ * @brief Converte radianos para graus.
+ * @param radv Valor em radianos.
+ * @return Valor em graus.
+ */
 static inline float deg(float radv) { return radv*180.0f/(float)M_PI; }
 
-// Compute atan2-like safe acos
+/**
+ * @brief Versão segura de acosf com clamp do argumento em [-1, 1].
+ */
 static inline float safe_acos(float x) {
     if (x > 1.0f) x = 1.0f;
     if (x < -1.0f) x = -1.0f;
     return acosf(x);
 }
 
-// Computes azimuth and elevation per spec:
-// Az = atan2( (X_T - X_A), (Y_T - Y_A) )
-// El = atan2( (Z_T - Z_A), sqrt((X_T-X_A)^2 + (Y_T-Y_A)^2) )
+/**
+ * @brief Calcula azimute e elevação do alvo T em relação à aeronave A.
+ *
+ * Fórmulas:
+ *  - Az = atan2( X_T - X_A, Y_T - Y_A )
+ *  - El = atan2( Z_T - Z_A, sqrt((X_T-X_A)^2 + (Y_T-Y_A)^2) )
+ *
+ * @param A Posição da aeronave.
+ * @param T Posição do alvo.
+ * @param Az [out] Azimute (rad).
+ * @param El [out] Elevação (rad).
+ */
 static void ComputeAzEl(Vector3 A, Vector3 T, float *Az, float *El)
 {
     Vector3 d = { T.x - A.x, T.y - A.y, T.z - A.z };
@@ -30,8 +79,15 @@ static void ComputeAzEl(Vector3 A, Vector3 T, float *Az, float *El)
     if (El) *El = el;
 }
 
-// Forward vector from yaw/pitch/roll (Z-up world; yaw about Z, pitch about X', roll about Y'')
-// We define aircraft body forward along +Y_body before rotation.
+/**
+ * @brief Calcula o vetor de frente a partir de yaw/pitch/roll.
+ *
+ * Mundo Z-up; yaw em Z, pitch em X, roll em Y. O vetor base é +Y do corpo.
+ * @param yaw Rotação yaw (rad).
+ * @param pitch Rotação pitch (rad).
+ * @param roll Rotação roll (rad).
+ * @return Vetor unitário frente da aeronave.
+ */
 static Vector3 ForwardFromYPR(float yaw, float pitch, float roll)
 {
     // Build rotation matrices and apply to forward = (0,1,0).
@@ -56,7 +112,12 @@ static Vector3 ForwardFromYPR(float yaw, float pitch, float roll)
     return v3;
 }
 
-// Compute az/el for roll axis (i.e., forward vector) relative to world
+/**
+ * @brief Calcula azimute/elevação de um vetor no espaço.
+ * @param v Vetor 3D (não precisa ser unitário).
+ * @param Az [out] Azimute (rad).
+ * @param El [out] Elevação (rad).
+ */
 static void ComputeAzElFromVector(Vector3 v, float *Az, float *El)
 {
     float horiz = sqrtf(v.x*v.x + v.y*v.y);
@@ -66,8 +127,20 @@ static void ComputeAzElFromVector(Vector3 v, float *Az, float *El)
     if (El) *El = el;
 }
 
-// From spec relations in spherical trigonometry
-// Given AzT, ElT and AzR, ElR, compute j and G (also provide intermediates for HUD display)
+/**
+ * @brief Deriva ângulos esféricos a partir de Az/El do alvo (T) e do vetor frente (R).
+ *
+ * Calcula j e G, além dos intermediários E, F, J usados no HUD.
+ * @param AzT Azimute do alvo (rad).
+ * @param ElT Elevação do alvo (rad).
+ * @param AzR Azimute do vetor frente (rad).
+ * @param ElR Elevação do vetor frente (rad).
+ * @param out_j [out] Ângulo j (rad).
+ * @param out_G [out] Ângulo G (rad).
+ * @param out_E [out] Ângulo E (rad).
+ * @param out_F [out] Ângulo F (rad).
+ * @param out_J [out] Ângulo J (rad).
+ */
 static void ComputeSphericalAngles(float AzT, float ElT, float AzR, float ElR,
                                    float *out_j, float *out_G,
                                    float *out_E, float *out_F, float *out_J)
@@ -96,7 +169,8 @@ static void ComputeSphericalAngles(float AzT, float ElT, float AzR, float ElR,
     float F = 0.0f;
     if (fabsf(denom) > 1e-6f) {
         float s = sinf(J)*sinf(f)/denom;
-        if (s > 1.0f) s = 1.0f; if (s < -1.0f) s = -1.0f;
+        if (s > 1.0f) s = 1.0f;
+        if (s < -1.0f) s = -1.0f;
         F = asinf(s);
     } else {
         F = 0.0f;
@@ -111,7 +185,14 @@ static void ComputeSphericalAngles(float AzT, float ElT, float AzR, float ElR,
     if (out_J) *out_J = J;
 }
 
-// Draw simple aircraft as an arrow aligned with yaw/pitch/roll at position A
+/**
+ * @brief Desenha um modelo simples de aeronave como uma seta em A com yaw/pitch/roll.
+ * @param A Posição da aeronave.
+ * @param yaw Yaw (rad).
+ * @param pitch Pitch (rad).
+ * @param roll Roll (rad).
+ * @param col Cor do corpo.
+ */
 static void DrawAircraft(Vector3 A, float yaw, float pitch, float roll, Color col)
 {
     // Build basis vectors from yaw/pitch/roll: forward, right, up
@@ -139,14 +220,24 @@ static void DrawAircraft(Vector3 A, float yaw, float pitch, float roll, Color co
     DrawCylinderEx(A, tailTop, 0.03f, 0.03f, 8, Fade(col, 0.8f));
 }
 
-// Project 3D point to 2D screen and draw text at that position
+/**
+ * @brief Projeta ponto 3D para tela e desenha texto próximo a ele.
+ */
 static void DrawTextAt3D(Camera3D cam, Vector3 p, const char *text, int fontSize, Color col, int screenW, int screenH)
 {
     Vector2 s = GetWorldToScreenEx(p, cam, screenW, screenH);
     DrawText(text, (int)s.x + 6, (int)s.y - fontSize - 2, fontSize, col);
 }
 
-// Draw a circular arc in 3D between unit vectors u->v around their plane, centered at originC, with given radius
+/**
+ * @brief Desenha um arco 3D no plano definido por u e v, centrado em originC.
+ * @param originC Centro do arco.
+ * @param u Vetor unitário inicial.
+ * @param v Vetor unitário final.
+ * @param angleJ Ângulo entre u e v (rad).
+ * @param radius Raio do arco.
+ * @param col Cor do arco.
+ */
 static void DrawArc3D(Vector3 originC, Vector3 u, Vector3 v, float angleJ, float radius, Color col)
 {
     if (angleJ <= 1e-5f) return;

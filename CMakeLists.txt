@@ -65,3 +65,15 @@ install(TARGETS woe3d RUNTIME DESTINATION bin)
 
 # IDE folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# --- Documentation (Doxygen) ---
+find_package(Doxygen QUIET)
+if (DOXYGEN_FOUND)
+  add_custom_target(doc
+    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM)
+else()
+  message(STATUS "Doxygen not found: target 'doc' will be unavailable")
+endif()
