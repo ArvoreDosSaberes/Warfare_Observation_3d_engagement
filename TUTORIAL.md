@@ -22,6 +22,21 @@ Em resumo: você verá na prática como as posições 3D viram ângulos que o pi
 
 ---
 
+## O que é HUD?
+
+HUD é a sigla para Head-Up Display. Na aviação, é um “visor” que apresenta informações importantes diretamente no campo de visão do piloto, para que ele não precise baixar a cabeça (head down) e olhar instrumentos no painel.
+
+Neste app, o HUD é o desenho 2D no centro da tela que mostra:
+- Um ponto que representa a direção do alvo na perspectiva do piloto.
+- A distância do ponto ao centro (raio) é proporcional ao ângulo j: quanto maior j, mais longe do centro.
+- A direção angular do ponto é G + Roll: o símbolo gira conforme a rolagem da aeronave.
+- Círculos concêntricos são “marcas” angulares (referências de distância angular).
+- A cruz central indica o eixo de rolagem (o “nariz” da aeronave na projeção do HUD).
+
+Ideia principal: o HUD te diz “para onde olhar” e “o quão afastado do centro” está o alvo, como um piloto veria.
+
+---
+
 ## 2) Requisitos do sistema (Linux)
 
 Instale os pacotes básicos e bibliotecas gráficas:
