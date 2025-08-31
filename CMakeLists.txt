@@ -10,6 +10,10 @@ option(WOE_BUILD_EXAMPLES "Build examples" OFF)
 
 # Dependencies: raylib via FetchContent
 include(FetchContent)
+# Share FetchContent downloads/builds em ~/.cache/cmake por padrão
+if(NOT DEFINED FETCHCONTENT_BASE_DIR)
+  set(FETCHCONTENT_BASE_DIR "$ENV{HOME}/.cache/cmake" CACHE PATH "Base dir for FetchContent downloads" FORCE)
+endif()
 
 set(RAYLIB_VERSION 5.0)
 FetchContent_Declare(
