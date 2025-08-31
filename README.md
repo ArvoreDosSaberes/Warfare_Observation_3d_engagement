@@ -17,16 +17,23 @@
 
 Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos conceitos de Azimute/Elevação, triângulos esféricos e posicionamento do alvo relativo ao eixo de rolagem da aeronave.
 
-- Renderização 3D com Raylib
-- Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
-- HUD 2D com posição radial por j e orientação por G + Roll
-- Controles de câmera e interação para mover aeronave e alvo
+ - Renderização 3D com Raylib
+ - Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
+ - HUD 2D com posição radial por j e orientação por G + Roll
+ - Controles de câmera e interação para mover aeronave e alvo
+
+## Tutorial para iniciantes
+
+Se você está começando agora, siga o passo a passo em: [TUTORIAL.md](TUTORIAL.md)
 
 # Warfare Observation 3D Engagement
 
 Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos conceitos de Azimute/Elevação, triângulos esféricos e posicionamento do alvo relativo ao eixo de rolagem da aeronave.
 
-- Renderização 3D com Raylib
+ - Renderização 3D com Raylib
+ - Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
+ - HUD 2D com posição radial por j e orientação por G + Roll
+ - Controles de câmera e interação para mover aeronave e alvo
 - Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
 - HUD 2D com posição radial por j e orientação por G + Roll
 - Controles de câmera e interação para mover aeronave e alvo
