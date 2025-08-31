@@ -1,14 +1,3 @@
-# Warfare Observation 3D Engagement
-
-Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos conceitos de Azimute/Elevação, triângulos esféricos e posicionamento do alvo relativo ao eixo de rolagem da aeronave.
-
-- Renderização 3D com Raylib
-- Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
-- HUD 2D com posição radial por j e orientação por G + Roll
-- Controles de câmera e interação para mover aeronave e alvo
-
-## Badges
-
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Language-C](https://img.shields.io/badge/language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![CMake](https://img.shields.io/badge/build-CMake-informational.svg)](https://cmake.org/)
@@ -18,6 +7,14 @@ Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos concei
 [![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/network/members)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 
+# Warfare Observation 3D Engagement
+
+Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos conceitos de Azimute/Elevação, triângulos esféricos e posicionamento do alvo relativo ao eixo de rolagem da aeronave.
+
+- Renderização 3D com Raylib
+- Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
+- HUD 2D com posição radial por j e orientação por G + Roll
+- Controles de câmera e interação para mover aeronave e alvo
 
 ## Conceitos Implementados
 
