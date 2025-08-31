@@ -1,4 +1,7 @@
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/actions/workflows/ci.yml/badge.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/actions/workflows/ci.yml)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=ArvoreDosSaberes.Warfare_Observation_3d_Engagement)
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-blue.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+![Language: Portuguese](https://img.shields.io/badge/Language-Portuguese-brightgreen.svg)
 [![Language-C](https://img.shields.io/badge/language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 [![CMake](https://img.shields.io/badge/build-CMake-informational.svg)](https://cmake.org/)
 [![Raylib](https://img.shields.io/badge/graphics-raylib-2ea44f.svg)](https://www.raylib.com/)
@@ -6,6 +9,18 @@
 [![Stars](https://img.shields.io/github/stars/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/stargazers)
 [![Forks](https://img.shields.io/github/forks/ArvoreDosSaberes/Warfare_Observation_3d_Engagement.svg)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/network/members)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+[![Watchers](https://img.shields.io/github/watchers/ArvoreDosSaberes/Warfare_Observation_3d_Engagement)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/watchers)
+[![Last Commit](https://img.shields.io/github/last-commit/ArvoreDosSaberes/Warfare_Observation_3d_Engagement)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/commits)
+[![Contributors](https://img.shields.io/github/contributors/ArvoreDosSaberes/Warfare_Observation_3d_Engagement)](https://github.com/ArvoreDosSaberes/Warfare_Observation_3d_Engagement/graphs/contributors)
+
+# Warfare Observation 3D Engagement
+
+Um demonstrador interativo em C (Raylib) para visualização 3D e HUD dos conceitos de Azimute/Elevação, triângulos esféricos e posicionamento do alvo relativo ao eixo de rolagem da aeronave.
+
+- Renderização 3D com Raylib
+- Cálculo de AzT, ElT, AzR, ElR e ângulos esféricos j, J, E, F, G
+- HUD 2D com posição radial por j e orientação por G + Roll
+- Controles de câmera e interação para mover aeronave e alvo
 
 # Warfare Observation 3D Engagement
 
